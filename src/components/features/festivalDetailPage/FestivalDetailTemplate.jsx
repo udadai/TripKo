@@ -17,6 +17,7 @@ import Photo from "../../atoms/Photo";
 import TimeDropdown from "../../molecules/TimeDropdown";
 import CardTitle from "../../atoms/CardTitle";
 import {reserveFestival} from "../../../apis/reservation";
+import {useNavigate} from "react-router-dom";
 
 const FestivalDetailTemplate = ({ festival }) => {
   const [isActiveReview, setIsActiveReview] = useState(false);
@@ -24,6 +25,8 @@ const FestivalDetailTemplate = ({ festival }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("Time To Visit");
   const [selectedPeople, setSelectedPeople] = useState(0);
+
+  const navigate = useNavigate();
 
   const { data } = useQuery(`festival/review/${festival.id}`, () =>
     getReviewByIdAndType(festival.id, "festival"),
@@ -75,7 +78,7 @@ const FestivalDetailTemplate = ({ festival }) => {
                 setSelectedDate={setSelectedDate}
                 unavailableDays={operatingInfo.holiday}
               />
-              <div className={"time-select-form flex flex-col py-2 text-lg"}>
+              <div className={"time-select-form flex flex-col p-2 text-lg"}>
                 <CardTitle title={"Visit Time"} />
                 <div className={"dropdown-wrapper"}>
                   <TimeDropdown
@@ -97,18 +100,24 @@ const FestivalDetailTemplate = ({ festival }) => {
                     type={"number"}
                     placeholder={"Please enter number of people"}
                     value={selectedPeople}
-                    onChange={(e) => setSelectedPeople(e.target.value)}
+                    onChange={(e) => {
+                      if (e.target.value < 0) {
+                        alert("Please enter positive number");
+                        return;
+                      }
+                      setSelectedPeople(e.target.value);
+                    }}
                   />
                 </div>
+                <Button
+                  as="button"
+                  onClick={onReserve}
+                  variant="link"
+                  className="rounded-button-[tripKoOrange] mt-4 flex h-12 w-full items-center justify-center rounded-full bg-tripKoOrange text-white"
+                >
+                  Reservation
+                </Button>
               </div>
-              <Button
-                as="button"
-                onClick={onReserve}
-                variant="link"
-                className="rounded-button-[tripKoOrange] h-12 w-full rounded-full bg-tripKoOrange text-white"
-              >
-                Reservation
-              </Button>
             </div>
           )}
         </BottomPopModal>
@@ -148,7 +157,15 @@ const FestivalDetailTemplate = ({ festival }) => {
         <ButtonAllReviews onClick={() => setIsActiveReview(true)} />
         <Button
           className={"reservation-button"}
-          onClick={() => setIsActiveCalender(true)}
+          onClick={() => {
+            if (localStorage.getItem("token") === null) {
+              alert("Please login to reserve")
+              navigate("/login");
+            }
+            else {
+              setIsActiveCalender(true);
+            }
+          }}
         >
           Reserve
         </Button>

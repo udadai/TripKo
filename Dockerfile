@@ -1,15 +1,12 @@
 FROM krmp-d2hub-idock.9rum.cc/goorm/node:16
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm ci
 COPY . .
 
-RUN apt-get update && \
-    apt-get install -y nginx && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm /etc/nginx/sites-enabled/default
-COPY default.conf /etc/nginx/conf.d/
+ENV REACT_APP_API_URL=https://k9f03505f0e8ba.user-app.krampoline.com/api/
 
+RUN npm ci
+RUN npm run build
 RUN npm install -g serve
-
-CMD npm run build && service nginx start && serve -s build
+EXPOSE 3000
+CMD ["serve", "build"]

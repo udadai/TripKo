@@ -9,9 +9,4 @@ RUN npm ci
 RUN npm run build
 RUN npm install -g serve
 EXPOSE 3000
-<<<<<<< HEAD
 CMD ["serve", "build"]
-=======
-CMD ["serve", "build"]
-
->>>>>>> 2499baafdb2e7d28a2ab04ec83bc8bb38a34b2c6

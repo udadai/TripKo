@@ -48,7 +48,7 @@ instance.interceptors.response.use(
         break;
       case 404:
         // 404 Not Found 에러 처리
-        alert("The requested resource was not found.");
+        // alert("The requested resource was not found.");
         break;
       default:
         // 기타 에러 처리

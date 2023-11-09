@@ -6,6 +6,7 @@ const instance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+	withCredentials: true,
 });
 
 // multi-part/formdata 형식으로 데이터를 전송하기 위한 instance

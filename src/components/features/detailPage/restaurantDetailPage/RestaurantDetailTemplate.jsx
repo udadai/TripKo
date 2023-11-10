@@ -6,7 +6,6 @@ import HorizontalListSection from "../../carousel/HorizontalListSection";
 import MenuCard from "../../../molecules/cards/MenuCard";
 import ButtonAllReviews from "../atoms/ButtonAllReviews";
 import { useQuery } from "react-query";
-import { getReviewByIdAndType } from "../../../../apis/review";
 import BottomPopModal from "../../../atoms/Modals/BottomPopModal";
 import InfoElement from "../atoms/InfoElement";
 import { getCalenderByIdAndType } from "../../../../apis/detail";
@@ -26,10 +25,6 @@ const RestaurantDetailTemplate = ({ restaurant }) => {
   const [requestMessage, setRequestMessage] = useState("");
   const [selectedTime, setSelectedTime] = useState("Time To Visit");
   const [selectedPeople, setSelectedPeople] = useState(1);
-
-  const { data } = useQuery(`restaurant/review/${restaurant.id}`, () =>
-    getReviewByIdAndType(restaurant.id, "restaurant"),
-  );
 
   const navigate = useNavigate();
 
@@ -64,7 +59,7 @@ const RestaurantDetailTemplate = ({ restaurant }) => {
 
   return (
     <div className={"restaurant-detail-template w-full"}>
-      <PageTitleBar name={restaurant.name} />
+      <PageTitleBar name={restaurant?.name} />
       {(isActiveReview || isActiveCalender) && (
         <BottomPopModal
           onClose={() => {
@@ -72,7 +67,7 @@ const RestaurantDetailTemplate = ({ restaurant }) => {
             setIsActiveCalender(false);
           }}
         >
-          {isActiveReview && <ReviewCards reviews={data.reviews} />}
+          {isActiveReview && <ReviewCards placeId={restaurant.id} />}
           {isActiveCalender && (
             <div
               className={"calendar-wrapper flex flex-col justify-center px-2"}
@@ -144,8 +139,8 @@ const RestaurantDetailTemplate = ({ restaurant }) => {
         }
       >
         <Photo
-          src={restaurant.mainImage}
-          alt={restaurant.name}
+          src={restaurant?.mainImage}
+          alt={restaurant?.name}
           className={"min-h-[30rem] w-full"}
           extendable={true}
         />
@@ -157,12 +152,12 @@ const RestaurantDetailTemplate = ({ restaurant }) => {
       >
         <SectionTitle title={"Menu"} />
         <HorizontalListSection>
-          {restaurant.menu.map((menu, index) => (
+          {restaurant?.menu?.map((menu, index) => (
             <MenuCard menu={menu} key={index} />
           ))}
         </HorizontalListSection>
         <SectionTitle title={"Information"} />
-        {restaurant.contents.map((content) => (
+        {restaurant?.contents?.map((content) => (
           <Article
             key={content.page}
             description={content.description}
@@ -170,13 +165,13 @@ const RestaurantDetailTemplate = ({ restaurant }) => {
           />
         ))}
         <div className={"information-card grid gap-2 px-4 py-2 md:grid-cols-2"}>
-          <InfoElement title={"Address"} value={restaurant.address} />
-          <InfoElement title={"Contact"} value={restaurant.contactInfo} />
-          <InfoElement title={"Operating Hours"} value={restaurant.open} />
-          <InfoElement title={"Break Time"} value={restaurant.breakTime} />
+          <InfoElement title={"Address"} value={restaurant?.address} />
+          <InfoElement title={"Contact"} value={restaurant?.contactInfo} />
+          <InfoElement title={"Operating Hours"} value={restaurant?.open} />
+          <InfoElement title={"Break Time"} value={restaurant?.breakTime} />
         </div>
         <SectionTitle title={"Reviews"} />
-        {data && <ReviewCards reviews={data.reviews.slice(0, 2)} />}
+        <ReviewCards placeId={restaurant.id} count={2} />
         <ButtonAllReviews onClick={() => setIsActiveReview(true)} />
         {
           <Button

@@ -73,7 +73,8 @@ const MyPageTemplate = ({ userDetails }) => {
           as="button"
           onClick={() => {
             localStorage.removeItem("token");
-            navigate("/");
+            alert("You have successfully logged out.");
+            navigate("/login");
             window.location.reload();
           }}
           className="mb-2 flex h-10 w-60 items-center justify-center rounded-md shadow-md"

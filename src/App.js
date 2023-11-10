@@ -26,6 +26,7 @@ import ErrorPage from "./components/features/ErrorPage/ErrorPage";
 import { Helmet } from "react-helmet-async";
 import TouristSpotDetailPage from "./components/features/detailPage/spotDetailPage/TouristSpotDetailPage";
 import ReviewlistPage from "./components/features/reviewlistPage/ReviewlistPage";
+import EditReviewPage from "./components/features/formPages/editReviewPage/EditReviewPage";
 
 const queryClient = new QueryClient();
 export const ModalContext = createContext(null);
@@ -59,6 +60,7 @@ function App() {
                 <Routes>
                   <Route element={<MainLayout />}>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/home" element={<HomePage />} />
                     <Route
                       path="/restaurant/:id"
                       element={<RestaurantDetailPage />}
@@ -101,6 +103,8 @@ function App() {
 
                     <Route path={"/login"} element={<LoginPage />} />
                     <Route path={"/register"} element={<RegisterPage />} />
+
+                    <Route path={"/reviews/:id"} element={<EditReviewPage />} />
                   </Route>
 
                   <Route path="*" element={<ErrorPage />} />

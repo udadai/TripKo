@@ -1,28 +1,37 @@
 const RESTAURANTS = [
   {
     id: 1,
-    type: "restaurants",
+    type: "RESTAURANT",
     name: "Main Gate Toast",
     summary:
       "Jeongmun Toast is an old toast house famous among Pusan National University students. this store was dis...",
-    description:
-      "Jeongmun Toast is an old toast house famous among Pusan National University students. this store was discovered by a student who was looking for a place to eat after a night of drinking. The store is located near the main gate of Pusan National University, and it is a popular place for students to eat after a night of drinking. The store is open 24 hours a day, and it is a popular place for students to eat after a night of drinking. The store is open 24 hours a day, and it is a popular place for students to eat after a night of drinking. The store is open 24 hours a day, and it is a popular place for students to eat after a night of drinking. The store is open 24 hours a day, and it is a popular place for students to eat after a night of drinking. The store is open 24 hours a day, and it is a popular place for students to eat after a night of drinking.",
     mainImage: "https://picsum.photos/205",
-    images: [
-      "https://picsum.photos/200",
-      "https://picsum.photos/201",
-      "https://picsum.photos/202",
-      "https://picsum.photos/203",
+    contents: [
+      {
+        page: 1,
+        description:
+          "Jeongmun Toast is an old toast house famous among Pusan National University students. this store was discovered by a student who was looking for a place to eat after a night of drinking. The store is located near the main gate of Pusan National University, and it is a popular place for students to eat after a night of drinking. The store is open 24 hours a day, and it is a popular place for students to eat after a night of drinking. The store is open 24 hours a day, and it is a popular place for students to eat after a night of drinking. The store is open 24 hours a day, and it is a popular place for students to eat after a night of drinking. The store is open 24 hours a day, and it is a popular place for students to eat after a night of drinking. The store is open 24 hours a day, and it is a popular place for students to eat after a night of drinking.",
+        image: [
+          "https://picsum.photos/205",
+          "https://picsum.photos/206",
+        ],
+      },
+      {
+        page: 2,
+        description:
+          "Jeongmun Toast is an old toast house famous among Pusan National University students. this store was discovered by a student who was looking for a place to eat after a night of drinking. The store is located near the main gate of Pusan National University, and it is a popular place for students to eat after a night of drinking. The store is open 24 hours a day, and it is a popular place for students to eat after a night of drinking. ",
+        image: ["https://picsum.photos/208"],
+      },
     ],
     address: "BuildingName1 RoadName1 GeumjeongGu JangjeonDong Busan",
-    averageScore: 4.4,
+    averageRating: 4.4,
     holidayDate: "2021-10-10",
     open: "11:00~22:00",
     breakTime: "15:00~17:00",
     contactInfo: "010-1234-5678",
-    reservable: true,
+    isReservable: true,
     isWished: true,
-    menu: [
+    menus: [
       {
         id: 1,
         name: "toast",

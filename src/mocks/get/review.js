@@ -1,20 +1,16 @@
-import { REVIEW_POST_RESPONSE, REVIEWS } from "../datas/reviews";
+import { MY_REVIEW, REVIEWS } from "../datas/reviews";
 import { rest } from "msw";
-import { getRestaurantDetail } from "./restaurant";
-import { getFestivalDetail } from "./festival";
+import { MYREVIEW } from "../datas/myreview";
 
 export const getReviews = (length) => {
-  if (typeof length !== "number") {
-    return {};
-  }
-  return REVIEWS[0];
+  return REVIEWS
 };
 
 export const getRestaurantReviewHandler = rest.get(
-  "/restaurant/reviews/:id",
+  "/reviews/restaurant/:id",
   (req, res, ctx) => {
-    const id = req.params.id;
-    if (getRestaurantDetail(id) != null)
+    // const id = req.params.id;
+    // if (getRestaurantDetail(id) != null)
       return res(
         ctx.status(200),
         ctx.json({
@@ -22,22 +18,22 @@ export const getRestaurantReviewHandler = rest.get(
           response: getReviews(8),
         }),
       );
-    else
-      return res(
-        ctx.status(404),
-        ctx.json({
-          success: false,
-          response: null,
-        }),
-      );
+    // else
+    //   return res(
+    //     ctx.status(404),
+    //     ctx.json({
+    //       success: false,
+    //       response: null,
+    //     }),
+    //   );
   },
 );
 
 export const getFestivalReviewHandler = rest.get(
-  "/festival/reviews/:id",
+  "/reviews/festival/:id",
   (req, res, ctx) => {
-    const id = req.params.id;
-    if (getFestivalDetail(id) != null)
+    // const id = req.params.id;
+    // if (getFestivalDetail(id) != null)
       return res(
         ctx.status(200),
         ctx.json({
@@ -45,40 +41,77 @@ export const getFestivalReviewHandler = rest.get(
           response: getReviews(8),
         }),
       );
-    else
-      return res(
-        ctx.status(404),
-        ctx.json({
-          success: false,
-          response: null,
-        }),
-      );
+    // else
+    //   return res(
+    //     ctx.status(404),
+    //     ctx.json({
+    //       success: false,
+    //       response: null,
+    //     }),
+    //   );
   },
 );
 
-export const postRestaurantReviewHandler = rest.post(
-  "/restaurant/reviews",
+export const getTouristSpotReviewHandler = rest.get(
+    "/reviews/touristSpot/:id",
+    (req, res, ctx) => {
+        // const id = req.params.id;
+        // if (getFestivalDetail(id) != null)
+            return res(
+                ctx.status(200),
+                ctx.json({
+                    success: true,
+                    response: getReviews(8),
+                }),
+            );
+        // else
+        //     return res(
+        //         ctx.status(404),
+        //         ctx.json({
+        //             success: false,
+        //             response: null,
+        //         }),
+        //     );
+    },
+);
+export const getReviewedHandler = rest.get(
+  "/userinfo/reviews/:type/:id",
   (req, res, ctx) => {
+    const reviewed = Math.random() >= 0.5;
     return res(
       ctx.status(200),
       ctx.json({
         success: true,
-        error: null,
-        response: REVIEW_POST_RESPONSE,
+        response: {
+          reviewed: reviewed,
+          review: reviewed ? 1 : null,
+        },
       }),
     );
   },
 );
 
-export const postFestivalReviewHandler = rest.post(
-  "/festival/reviews",
+export const getMyReviewHandler = rest.get(
+  "/userinfo/reviews/:id",
   (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
         success: true,
-        error: null,
-        response: REVIEW_POST_RESPONSE,
+        response: MY_REVIEW,
+      }),
+    );
+  },
+);
+
+export const getMyReviewsHandler = rest.get(
+  "/userinfo/reviews",
+  (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        success: true,
+        response: MYREVIEW,
       }),
     );
   },

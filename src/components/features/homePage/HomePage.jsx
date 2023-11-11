@@ -8,7 +8,6 @@ import { utils } from "./utils";
 import SectionTitle from "../../atoms/SectionTitle";
 import HorizontalListSectionMediaQuery from "../carousel/HorizontalListSectionMediaQuery";
 import SearchBar from "../../molecules/SearchBar";
-import { search } from "../../../apis/search";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -22,16 +21,24 @@ const dummySlides = [
   {
     image: "https://picsum.photos/200/302",
   },
+  {
+    image: "/images/carousel/carousel1.jpg"
+  },
+  {
+    image: "/images/carousel/carousel2.jpg"
+  },
+  {
+    image: "/images/carousel/carousel3.webp"
+  }
 ];
 
 const HomePage = () => {
   const navigate = useNavigate();
   const { data } = useQuery("products", () => getHome());
   const [query, setQuery] = useState("");
-
+  console.log(data)
   const handleSearch = async (searchQuery) => {
-    await search(searchQuery);
-    navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
+    navigate(`/search?location=${encodeURIComponent(searchQuery)}`);
   };
 
   return (
@@ -72,6 +79,7 @@ const HomePage = () => {
                     to={`restaurant/${restaurant.id}`}
                     name={restaurant.name}
                     address={restaurant.address}
+                    averageRating={restaurant.averageRating}
                   />
                 );
               })}
@@ -85,6 +93,8 @@ const HomePage = () => {
                   image={spot.image}
                   name={spot.name}
                   address={spot.address}
+                  to={`touristSpot/${spot.id}`}
+                  averageRating={spot.averageRating}
                 />
               ))}
           </HorizontalListSectionMediaQuery>

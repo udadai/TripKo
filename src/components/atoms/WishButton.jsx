@@ -1,19 +1,24 @@
 import { useMutation, useQueryClient } from "react-query";
 import { useState, useEffect } from "react";
 import { AiFillHeart } from "react-icons/ai";
-import { wish } from "../../apis/wish";
+import { addWish, deleteWish, wish } from "../../apis/wish";
 
 const WishButton = ({ filter, id, initialIsWished, onWishChange }) => {
   const [isWished, setIsWished] = useState(initialIsWished);
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(() => wish(filter, id, !isWished), {
+  const addMutation = useMutation(() => addWish(id), {
     onSuccess: () => {
-      setIsWished(!isWished);
+      setIsWished(true);
+      if (onWishChange) onWishChange(true);
+      queryClient.refetchQueries("wishlist");
+    },
+  });
 
-      if (onWishChange) {
-        onWishChange(!isWished);
-      }
+  const deleteMutation = useMutation(() => deleteWish(id), {
+    onSuccess: () => {
+      setIsWished(false);
+      if (onWishChange) onWishChange(false);
       queryClient.refetchQueries("wishlist");
     },
   });
@@ -24,11 +29,15 @@ const WishButton = ({ filter, id, initialIsWished, onWishChange }) => {
 
   const handleWishButtonClick = (event) => {
     event.stopPropagation();
-    mutate();
+    if (isWished) {
+      deleteMutation.mutate();
+    } else {
+      addMutation.mutate();
+    }
   };
 
   return (
-    <button onClick={handleWishButtonClick}>
+    <button onClick={handleWishButtonClick} aria-label="wish-button">
       <AiFillHeart
         size={20}
         color={isWished ? "#ff6b6b" : "#e4e5e9"}

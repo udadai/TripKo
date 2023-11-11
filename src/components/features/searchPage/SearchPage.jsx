@@ -1,59 +1,81 @@
-import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import SearchBar from "../../molecules/SearchBar";
 import FilterBar from "../../molecules/FilterBar";
 import FilterResults from "./organisms/FilterResults";
 import { search } from "../../../apis/search";
+import {
+  restaurantSearch,
+  festivalSearch,
+  touristSpotSearch,
+} from "../../../apis/search";
 
 const SearchPage = () => {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const initialQuery = searchParams.get("query") || "";
+  const initialQuery = searchParams.get("location") || "";
 
   const [query, setQuery] = useState(initialQuery);
   const [filter, setFilter] = useState("all");
-  const [searchKey, setSearchKey] = useState(["searchResults", query]);
+  const [searchResults, setSearchResults] = useState({
+    restaurants: [],
+    festivals: [],
+    touristSpots: [],
+  });
   const [customError, setCustomError] = useState(null);
 
-  const {
-    data: results,
-    isLoading,
-    error,
-  } = useQuery(searchKey, () => search(query), {
-    onSuccess: (data) => {
-      if (!data || data.length === 0) {
-        setCustomError("No results found. Please try again.");
-        return;
-      }
-      setCustomError(null);
-      navigate(`/search?query=${encodeURIComponent(query)}`);
-    },
-    onError: (error) => {
-      console.log(error);
-      setCustomError("검색 중 오류가 발생했습니다. 다시 시도해 주세요.");
-    },
-  });
+  useEffect(() => {
+    if (query.trim()) {
+      handleSearch();
+    } else {
+      setCustomError("Please enter a search term.");
+    }
+  }, [query]);
 
-  const handleSearch = (value) => {
-    setSearchKey(["searchResults", value]);
+  const handleSearch = async () => {
+    setCustomError(null);
+    if (!query.trim()) {
+      setCustomError("Please enter a search term.");
+      return;
+    }
+
+    try {
+      const results = await search(query);
+
+      switch (filter) {
+        case "all":
+          break;
+        case "restaurants":
+          results.restaurants = await restaurantSearch(query);
+          break;
+        case "festivals":
+          results.festivals = await festivalSearch(query);
+          break;
+        case "touristSpots":
+          results.touristSpots = await touristSpotSearch(query);
+          break;
+        default:
+          throw new Error("Invalid filter option");
+      }
+      setSearchResults(results);
+    } catch (error) {
+      setCustomError("Failed to fetch results. Please try again.");
+    }
   };
 
+  console.log(searchResults);
   return (
-    <div className="w-full">
+    <div className="mb-20 h-screen w-full overflow-y-auto">
       <SearchBar
         baseUrl={"/search"}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onSearch={handleSearch}
       />
-      {isLoading && <div>검색 중...</div>}
       <FilterBar filter={filter} setFilter={setFilter} />
-      {customError && (
+      {customError ? (
         <div className="error-message m-4 text-xl font-bold">{customError}</div>
-      )}
-      {!customError && (
-        <FilterResults filter={filter} results={results || []} />
+      ) : (
+        <FilterResults filter={filter} searchResults={searchResults} />
       )}
     </div>
   );

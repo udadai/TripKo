@@ -2,14 +2,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainLayout from "./components/layouts/MainLayout";
 import HomePage from "./components/features/homePage/HomePage";
 import SearchPage from "./components/features/searchPage/SearchPage";
-import RestaurantDetailPage from "./components/features/restaurantDetailPage/RestaurantDetailPage";
+import RestaurantDetailPage from "./components/features/detailPage/restaurantDetailPage/RestaurantDetailPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import FoodSearchPage from "./components/features/foodSearchPage/FoodSearchPage";
 import WishlistPage from "./components/features/wishlistPage/WishlistPage";
-import FestivalDetailPage from "./components/features/festivalDetailPage/FestivalDetailPage";
+import FestivalDetailPage from "./components/features/detailPage/festivalDetailPage/FestivalDetailPage";
 import ReservationListPage from "./components/features/reservationListPage/ReservationListPage";
-import FoodDetailPage from "./components/features/foodDetailPage/FoodDetailPage";
+import FoodDetailPage from "./components/features/detailPage/foodDetailPage/FoodDetailPage";
 
 import LoginPage from "./components/features/formPages/loginPage/LoginPage";
 import RegisterPage from "./components/features/formPages/registerPage/RegisterPage";
@@ -24,6 +24,9 @@ import { createContext } from "react";
 import { useModal } from "./hooks/useModal";
 import ErrorPage from "./components/features/ErrorPage/ErrorPage";
 import { Helmet } from "react-helmet-async";
+import TouristSpotDetailPage from "./components/features/detailPage/spotDetailPage/TouristSpotDetailPage";
+import ReviewlistPage from "./components/features/reviewlistPage/ReviewlistPage";
+import EditReviewPage from "./components/features/formPages/writeReviewPage/EditReviewPage";
 
 const queryClient = new QueryClient();
 export const ModalContext = createContext(null);
@@ -57,6 +60,7 @@ function App() {
                 <Routes>
                   <Route element={<MainLayout />}>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/home" element={<HomePage />} />
                     <Route
                       path="/restaurant/:id"
                       element={<RestaurantDetailPage />}
@@ -65,6 +69,11 @@ function App() {
                       path="/festival/:id"
                       element={<FestivalDetailPage />}
                     />
+                    <Route
+                        path="/touristSpot/:id"
+                        element={<TouristSpotDetailPage />}
+                    />
+
                     <Route path={"/search"} element={<SearchPage />} />
 
                     <Route path={"/foods"} element={<FoodSearchPage />} />
@@ -85,10 +94,17 @@ function App() {
                         path={"/userinfo/edit"}
                         element={<ProfileEditPage />}
                       />
+
+                      <Route
+                        path={"/userinfo/reviews/:filter"}
+                        element={<ReviewlistPage />}
+                      />
                     </Route>
 
                     <Route path={"/login"} element={<LoginPage />} />
                     <Route path={"/register"} element={<RegisterPage />} />
+
+                    <Route path={"/reviews/:id"} element={<EditReviewPage />} />
                   </Route>
 
                   <Route path="*" element={<ErrorPage />} />

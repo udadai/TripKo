@@ -22,7 +22,10 @@ const ReviewCard = ({ review }) => {
         <div className={"review-card-header-info flex flex-col justify-evenly"}>
           <CardTitle title={review.authorNickname} lineClamp={1} />
           <span className={"text-sm text-gray-500"}>{review.visitTime}</span>
-          <StarRating averageScore={review.rating} />
+          <div className={"review-rating flex text-sm text-gray-500"}>
+            <StarRating averageRating={review.rating} />
+            {review.rating.toFixed(1)}
+          </div>
         </div>
       </div>
       <div className={"review-card-body"}>
@@ -34,14 +37,21 @@ const ReviewCard = ({ review }) => {
           <>
             <CardTitle title={"Photo"} />{" "}
             <div
-              className={"review-photo-section flex h-[15rem] w-full overflow-x-scroll"}
+              className={
+                "review-photo-section flex w-full overflow-x-scroll py-2"
+              }
             >
-              <Photo
-                className={"h-[15rem] w-[15rem] "}
-                src={review.image}
-                alt={""}
-                extendable={true}
-              />
+              <div className={"flex gap-2"}>
+                {review.reviewImage.map((image, index) => (
+                  <Photo
+                    className={"h-[15rem] w-[15rem] "}
+                    src={image}
+                    alt={""}
+                    extendable={true}
+                    key={index}
+                  />
+                ))}
+              </div>
             </div>
           </>
         )}

@@ -1,46 +1,40 @@
-import FESTIVALS from "../datas/festivals";
-import RESTAURANTS from "../datas/restaurants";
-import TOURIST_SPOTS from "../datas/touristSpots";
+import WISHLIST from "../datas/wishlist";
 import { rest } from "msw";
 
-export const getWishlist = () => {
-  return {
-    data: {
-      response: {
-        touristSpots: TOURIST_SPOTS.filter((item) => item.isWished),
-        restaurants: RESTAURANTS.filter((item) => item.isWished),
-        festivals: FESTIVALS.filter((item) => item.isWished),
-      },
-    },
-  };
-};
-
-export const getWishlistHandler = rest.get(
-  "/userinfo/wishlist",
+export const getRestaurantWishlistHandler = rest.get(
+  "/userinfo/wishlist/restaurants",
   (req, res, ctx) => {
-    const { filter } = req.params;
-    const wishlistResponse = getWishlist(filter);
-
     return res(
       ctx.status(200),
       ctx.json({
         success: true,
-        response: wishlistResponse,
+        response: WISHLIST,
       }),
     );
   },
 );
 
-export const postWishHandler = rest.patch(
-  "/userinfo/wishlist",
+export const getFestivalWishlistHandler = rest.get(
+  "/userinfo/wishlist/festivals",
   (req, res, ctx) => {
-    const { filter, id, isWished } = req.body;
-
     return res(
       ctx.status(200),
       ctx.json({
         success: true,
-        message: `Wish status updated for ${filter} with ID ${id} to ${isWished}.`,
+        response: WISHLIST,
+      }),
+    );
+  },
+);
+
+export const getTouristSpotWishlistHandler = rest.get(
+  "/userinfo/wishlist/touristSpots",
+  (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        success: true,
+        response: WISHLIST,
       }),
     );
   },

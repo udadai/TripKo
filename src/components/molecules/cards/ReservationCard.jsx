@@ -3,24 +3,22 @@ import MapIcon from "../../atoms/MapIcon";
 import Photo from "../../atoms/Photo";
 import Stamp from "../../atoms/Stamp";
 import { getReserveText } from "../../features/reservationListPage/utils";
-import {useContext, useMemo} from "react";
-import {useNavigate} from "react-router-dom";
-import {ModalContext} from "../../../App";
-import ReviewForm from "../../features/formPages/writeReviewPage/ReviewForm";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { ModalContext } from "../../../App";
+import ReviewFormReservation from "../../features/formPages/writeReviewPage/ReviewFormReservation";
+import Button from "../../atoms/Button";
+import { isReviewable } from "./utils";
+import { BsFillPersonFill } from "react-icons/bs";
 
-const ReservationCard = ({ reservation, reviewable }) => {
-
-  const status = useMemo(
-    () => getReserveText(reservation.status),
-    [reservation.status],
-  );
+const ReservationCard = ({ reservation }) => {
 
   const navigate = useNavigate();
   const navigateToDetail = (e) => {
     e.stopPropagation();
-    navigate(`/${reservation.type}/${reservation.id}`);
+    navigate(`/${reservation.type.toLowerCase()}/${reservation.id}`);
   };
-  const { show } = useContext(ModalContext)
+  const { show } = useContext(ModalContext);
 
   return (
     <div className="reservation-card-wrapper ticket-card flex h-40 w-full">
@@ -57,24 +55,49 @@ const ReservationCard = ({ reservation, reviewable }) => {
             "reservation-content-bottom flex items-center justify-between"
           }
         >
-          {reviewable && (
-            <button
-              className={"reservation-bottom underline text-tripKoOrange-500 cursor-pointer"}
+          {isReviewable(
+            reservation.status,
+            reservation.date,
+            reservation.time,
+          ) && (
+            <Button
+              as={"button"}
+              className={
+                "reservation-bottom cursor-pointer text-tripKoOrange-500 underline"
+              }
               onClick={(e) => {
                 e.stopPropagation();
-                show(<ReviewForm reservation={reservation} />);
+                show(<ReviewFormReservation reservation={reservation} />);
               }}
+              aria-label={"write-review-button"}
             >
-              Submit Review
-            </button>
+              Write Review
+            </Button>
+          )}
+          {reservation?.status === "리뷰완료" && (
+            <span
+              className={
+                "reservation-bottom cursor-pointer text-tripKoOrange-500"
+              }
+            >
+              Reviewed
+            </span>
           )}
         </div>
         <Stamp className={"absolute bottom-4 left-1 rotate-12 bg-white"}>
-          {status}
+          {getReserveText(reservation.status)}
         </Stamp>
+        <div
+          className={
+            "absolute bottom-2 right-2 flex text-2xl text-tripKoOrange-500"
+          }
+          aria-label={`the number of people reserved ${reservation.headCount}`}
+        >
+          <BsFillPersonFill color={"#ff4000"} size={30} />
+          {reservation?.headCount}
+        </div>
       </div>
     </div>
   );
 };
-
 export default ReservationCard;

@@ -9,10 +9,10 @@ const ReservationListTemplate = ({ reservations }) => {
     if (!reservations) return [];
 
     reservations?.restaurant.forEach(
-      (reservation) => (reservation.type = "restaurant"),
+      (reservation) => (reservation.type = "RESTAURANT"),
     );
     reservations?.festival.forEach(
-      (reservation) => (reservation.type = "festival"),
+      (reservation) => (reservation.type = "FESTIVAL"),
     );
     return sortReservation([
       ...reservations.restaurant,
@@ -29,7 +29,7 @@ const ReservationListTemplate = ({ reservations }) => {
       ) : (
         <div className={"grid grid-cols-1 gap-4 px-2 sm:grid-cols-2"}>
           {sortedReservation.map((reservation) => (
-            <ReservationCard key={reservation.id} reservation={reservation} reviewable={reservation?.status==="이용완료"} />
+            <ReservationCard key={reservation.id} reservation={reservation}/>
           ))}
         </div>
       )}

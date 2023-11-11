@@ -1,16 +1,19 @@
+import { Link } from "react-router-dom";
 import RestaurantCard from "../../../molecules/cards/RestaurantCard";
 import FestivalCard from "../../../molecules/cards/FestivalCard";
 import TouristSpotCard from "../../../molecules/cards/TouristSpotCard";
 
-const FilterResults = ({ results, filter }) => {
+const FilterResults = ({ filter, searchResults }) => {
   return (
     <div>
       {filter === "all" || filter === "restaurants" ? (
         <div>
           <h2 className="mx-4 text-xl font-bold">Restaurants</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2">
-            {results?.restaurants?.map((restaurant, index) => (
-              <RestaurantCard key={index} restaurant={restaurant} />
+            {searchResults?.restaurants?.map((restaurant, index) => (
+              <Link to={`/restaurant/${restaurant.id}`}>
+                <RestaurantCard key={index} restaurant={restaurant} />
+              </Link>
             ))}
           </div>
         </div>
@@ -19,8 +22,10 @@ const FilterResults = ({ results, filter }) => {
         <div>
           <h2 className="mx-4 text-xl font-bold">Festivals</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2">
-            {results?.festivals?.map((festival, index) => (
-              <FestivalCard key={index} festival={festival} />
+            {searchResults?.festivals?.map((festival, index) => (
+              <Link to={`/festival/${festival.id}`}>
+                <FestivalCard key={index} festival={festival} />
+              </Link>
             ))}
           </div>
         </div>
@@ -29,8 +34,10 @@ const FilterResults = ({ results, filter }) => {
         <div>
           <h2 className="mx-4 text-xl font-bold">Tourist Spots</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-            {results?.touristSpots?.map((touristSpot, index) => (
-              <TouristSpotCard key={index} touristSpot={touristSpot} />
+            {searchResults?.touristSpots?.map((touristSpot, index) => (
+              <Link to={`/touristSpot/${touristSpot.id}`}>
+                <TouristSpotCard key={index} touristSpot={touristSpot} />
+              </Link>
             ))}
           </div>
         </div>

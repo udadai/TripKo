@@ -9,7 +9,8 @@ import {
   EMAIL_CONDITION,
   NAME_CONDITION,
   ID_CONDITION,
-  PASSWORD_CONDITION, NICKNAME_CONDITION,
+  PASSWORD_CONDITION,
+  NICKNAME_CONDITION,
 } from "../constraints";
 import ErrorBox from "../../../atoms/ErrorBox";
 import NationSelector from "./NationSelector";
@@ -65,6 +66,7 @@ const RegisterPage = () => {
       validateNickname() &&
       nation
     );
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     validateEmail,
@@ -92,8 +94,15 @@ const RegisterPage = () => {
             window.location.href = "/login";
           })
           .catch((err) => {
-            setErrorMsgFromBE(err.response.error.message);
+            if (err.code === 500) {
+              alert("server error. please try again later.");
+              return;
+            }
+            alert(err.error.message);
+            setErrorMsgFromBE(err.error.message);
           });
+      } else {
+        alert("please check your inputs");
       }
     },
     [allInputValid, email, password, username, id, nickname, nation],
@@ -202,6 +211,7 @@ const RegisterPage = () => {
           as={button}
           className="login-button w-full rounded-full bg-tripKoOrange p-2 text-xl font-bold text-white"
           onClick={onSubmit}
+          aria-label="login-button"
         >
           Submit
         </Button>
@@ -211,5 +221,3 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
-
-//

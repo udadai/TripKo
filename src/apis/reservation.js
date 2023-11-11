@@ -9,38 +9,22 @@ export const getReservation = async () => {
   };
 };
 
-export const reserveFestival = async (festivalId, date, time, headCount) => {
+export const reserveFestival = async (id, date, headCount) => {
   const response = await instance.post("/festival/bookings", {
-    festivalId,
-    date,
-    time,
-    headCount,
+    placeId:id,
+    reservationDate:date,
+    headCount:headCount,
   });
-  return response.data;
+  return response.data.response;
 };
 
-/**
- *
- * @param restaurantId {number}
- * @param date {string}
- * @param time {string}
- * @param headCount {number}
- * @param message {string}
- * @returns {Promise<any>}
- */
-export const reserveRestaurant = async (
-  restaurantId,
-  date,
-  time,
-  headCount,
-  message,
-) => {
+export const reserveRestaurant = async (id, date, time, headCount, message) => {
   const response = await instance.post("/restaurant/bookings", {
-    restaurantId,
-    date,
-    time,
-    headCount,
-    message,
+    placeId: id,
+    reservationDate: date,
+    reservationTime: time,
+    headCount: headCount,
+    message: message,
   });
-  return response.data;
+  return response.data.response;
 };

@@ -22,20 +22,31 @@ export const getSpotById = async (id) => {
 };
 
 export const getFoodById = async (id) => {
-  return await instance
-    .get(`/foods/${id}`)
-    .then((response) => {
-      return {
-        isSuccess: true,
-        result: response.data.response,
-      };
-    })
-    .catch((error) => Promise.reject(error));
+  try {
+    const response = await instance.get(`/foods/${id}`);
+
+    // 서버 응답에서 success 상태를 확인
+    if (response.data.success === false) {
+      throw new Error(response.data.message || "Food details fetch failed");
+    }
+
+    return {
+      isSuccess: true,
+      result: response.data.response,
+    };
+  } catch (error) {
+    // 에러 메시지를 포함하여 에러를 다시 throw
+    if (error.code === 404) {
+      alert("Cannot find food information.");
+      window.history.back();
+    }
+    throw new Error(error.response?.data?.message || error.message);
+  }
 };
 
 export const getCalenderByIdAndType = async (id, type) => {
   return await instance
-    .get(`/${type}/bookings/calender/${id}`)
+    .get(`/${type}/bookings/calendar/${id}`)
     .then((response) => response.data.response)
     .catch((error) => Promise.reject(error));
 };

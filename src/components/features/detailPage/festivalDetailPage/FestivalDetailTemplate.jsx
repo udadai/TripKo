@@ -11,19 +11,18 @@ import Calendar from "../../calendar/Calendar";
 import { getCalenderByIdAndType } from "../../../../apis/detail";
 import Button from "../../../atoms/Button";
 import Photo from "../../../atoms/Photo";
-import TimeDropdown from "../../../molecules/TimeDropdown";
 import CardTitle from "../../../atoms/CardTitle";
 import { reserveFestival } from "../../../../apis/reservation";
 import { useNavigate } from "react-router-dom";
 import Article from "../../../organisms/Article";
+import { getReviewByIdAndType } from "../../../../apis/review";
 
 const FestivalDetailTemplate = ({ festival }) => {
   const [isActiveReview, setIsActiveReview] = useState(false);
   const [isActiveCalender, setIsActiveCalender] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState("Time To Visit");
   const [selectedPeople, setSelectedPeople] = useState(1);
-
+  const [isReserving, setIsReserving] = useState(false);
   const navigate = useNavigate();
 
   const { data: operatingInfo } = useQuery(
@@ -31,26 +30,30 @@ const FestivalDetailTemplate = ({ festival }) => {
     () => getCalenderByIdAndType(festival.id, "festival"),
   );
 
+  const { data } = useQuery(`festival/review/${festival.id}`, () =>
+    getReviewByIdAndType(festival.id, "FESTIVAL"),
+  );
+
   const onReserve = async () => {
-    if (!selectedDate || selectedTime === "Time To Visit") {
-      alert("Please select date and time to visit");
-      return;
-    }
     if (!selectedDate) {
       alert("Please select date to visit");
       return;
     }
-    const response = await reserveFestival(
-      festival.id,
-      selectedDate,
-      selectedTime,
-      selectedPeople,
-    );
-    if (response.success) {
+    if (!selectedPeople) {
+      alert("Please enter number of people");
+      return;
+    }
+    // date 를 YYYY-MM-DD 형식으로 변환
+    const dateString = selectedDate.toISOString().split("T")[0];
+    setIsReserving(true);
+    try {
+      await reserveFestival(festival.id, dateString, selectedPeople);
       alert("Reservation success");
       setIsActiveCalender(false);
-    } else {
+    } catch (error) {
       alert("Reservation failed");
+    } finally {
+      setIsReserving(false);
     }
   };
 
@@ -64,27 +67,16 @@ const FestivalDetailTemplate = ({ festival }) => {
             setIsActiveCalender(false);
           }}
         >
-          {isActiveReview && <ReviewCards placeId={festival.id} />}
+          {isActiveReview && <ReviewCards reviews={data.reviews} />}
           {isActiveCalender && (
             <div className={"calendar-wrapper flex flex-col justify-center"}>
               <Calendar
                 selectedDate={selectedDate}
                 setSelectedDate={setSelectedDate}
-                unavailableDays={operatingInfo.holiday}
+                startDate={operatingInfo.startDate}
+                endDate={operatingInfo.endDate}
               />
               <div className={"time-select-form flex flex-col p-2 text-lg"}>
-                <CardTitle title={"Visit Time"} />
-                <div className={"dropdown-wrapper"}>
-                  <TimeDropdown
-                    startTime={operatingInfo.reservationAvailableStartTime}
-                    endTime={operatingInfo.reservationAvailableEndTime}
-                    interval={10}
-                    value={selectedTime}
-                    onChange={setSelectedTime}
-                    startBreakTime={operatingInfo.breakStartTime}
-                    endBreakTime={operatingInfo.breakEndTime}
-                  />
-                </div>
                 <div className={"people-select-form flex flex-col"}>
                   <CardTitle title={"Number of People"} />
                   <input
@@ -95,7 +87,7 @@ const FestivalDetailTemplate = ({ festival }) => {
                     placeholder={"Please enter number of people"}
                     value={selectedPeople}
                     onChange={(e) => {
-                      if (e.target.value <= 0) {
+                      if (e.target.value <= 0 && e.target.value !== "") {
                         alert("Please enter positive number");
                         return;
                       }
@@ -107,10 +99,11 @@ const FestivalDetailTemplate = ({ festival }) => {
                   as="button"
                   onClick={onReserve}
                   variant="link"
-                  className="rounded-button-[tripKoOrange] mt-4 flex h-12 w-full items-center justify-center rounded-full bg-tripKoOrange text-white"
+                  className="rounded-button-[tripKoOrange] mt-4 flex h-12 w-full items-center justify-center rounded-full bg-tripKoOrange text-white font-bold text-xl"
                   aria-label="reserve-button"
+                  disabled={isReserving}
                 >
-                  Reservation
+                  Reserve
                 </Button>
               </div>
             </div>
@@ -148,7 +141,10 @@ const FestivalDetailTemplate = ({ festival }) => {
           <InfoElement title={"Price"} value={`₩${comma(festival.price)}`} />
         </div>
         <SectionTitle title={"Reviews"} />
-        <ReviewCards placeId={festival.id} count={2} />
+        <div className={"flex flex-row items-center justify-between font-bold text-2xl px-2 text-tripKoOrange-500"}>
+          {festival?.averageRating}/5.0
+        </div>
+        {data && <ReviewCards reviews={data.reviews.slice(0, 2)} />}
         <ButtonAllReviews onClick={() => setIsActiveReview(true)} />
         <Button
           as={"button"}
@@ -161,7 +157,7 @@ const FestivalDetailTemplate = ({ festival }) => {
               setIsActiveCalender(true);
             }
           }}
-          disabled={!festival?.reservable}
+          disabled={!festival?.isReservable}
           aria-label="reservation-button"
         >
           Reserve

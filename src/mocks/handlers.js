@@ -11,16 +11,23 @@ import {
 } from "./get/restaurant";
 import { getFestivalCalendarHandler, getFestivalHandler } from "./get/festival";
 import {
-  getReviewHandler,
   getReviewedHandler,
   getMyReviewHandler,
   getMyReviewsHandler,
+  getFestivalReviewHandler,
+  getRestaurantReviewHandler,
+  getTouristSpotReviewHandler,
 } from "./get/review";
 import { getTouristSpotHandler } from "./get/touristSpot";
 import { searchFoodHandler, getFoodHandler } from "./get/food";
-import { getWishlistHandler } from "./get/wishlist";
+import {
+  getFestivalWishlistHandler,
+  getRestaurantWishlistHandler,
+  getTouristSpotWishlistHandler,
+} from "./get/wishlist";
 import { loginHandler, registerHandler } from "./account/account";
-import { editUserHandler, getUserinfoHandler } from "./get/userinfo";
+import { getUserinfoHandler } from "./get/userinfo";
+import {editUserHandler, uploadUserImageHandler} from "./patch/userinfo";
 import {
   getFestivalReservationHandler,
   getRestaurantReservationHandler,
@@ -39,37 +46,54 @@ import { patchReviewHandler } from "./patch/review";
 import { deleteReviewHandler } from "./delete/review";
 
 export const handlers = [
+  // Search
   getSearchHandler,
   getSearchRestaurantHandler,
   getSearchFestivalHandler,
   getSearchTouristSpotHandler,
+  searchFoodHandler,
+
   getHomeHandler,
+
+  //detail
   getRestaurantHandler,
-  getRestaurantCalendarHandler,
-  getFestivalCalendarHandler,
   getFestivalHandler,
   getTouristSpotHandler,
-  searchFoodHandler,
   getFoodHandler,
-  getWishlistHandler,
+
+  getRestaurantWishlistHandler,
+  getFestivalWishlistHandler,
+  getTouristSpotWishlistHandler,
+
+  //wishlist
   postWishHandler,
   deleteWishHandler,
+
+  //account
   loginHandler,
   registerHandler,
   getUserinfoHandler,
   editUserHandler,
+  uploadUserImageHandler,
+
+  // Calendar
+  getRestaurantCalendarHandler,
+  getFestivalCalendarHandler,
 
   // Reservations
   postRestaurantReservationHandler,
   getRestaurantReservationHandler,
   postFestivalReservationHandler,
   getFestivalReservationHandler,
-  // Reviews
 
-  getReviewHandler,
+  // Reviews
   getReviewedHandler,
   getMyReviewHandler,
   getMyReviewsHandler,
+
+  getFestivalReviewHandler,
+  getRestaurantReviewHandler,
+  getTouristSpotReviewHandler,
 
   postRestaurantReviewHandler,
   postFestivalReviewHandler,

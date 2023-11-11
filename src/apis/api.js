@@ -6,6 +6,7 @@ const instance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+	withCredentials: true,
 });
 
 const organizeError = (error) => {
@@ -52,6 +53,10 @@ instance.interceptors.response.use(
         localStorage.removeItem("token");
         alert("Login is required.");
         window.location.href = "/login";
+        break;
+      case 404:
+        // 404 Not Found 에러 처리
+        // alert("The requested resource was not found.");
         break;
       default:
         break;

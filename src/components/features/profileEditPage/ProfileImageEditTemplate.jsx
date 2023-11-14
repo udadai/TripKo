@@ -53,7 +53,7 @@ const ProfileImageEditTemplate = ({ initImageURL }) => {
         hidden={true}
       />
       <Photo
-        src={imageURL}
+        src={imageURL || "/images/default-avatar.jpg"}
         alt={"profile image"}
         className={"h-40 w-40 rounded-full"}
       />
@@ -70,7 +70,7 @@ const ProfileImageEditTemplate = ({ initImageURL }) => {
         onClick={handleOnSubmit}
         disabled={isUploading}
       >
-        Change
+          {isUploading ? "Uploading..." : "Upload"}
       </button>
     </div>
   );

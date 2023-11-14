@@ -24,7 +24,7 @@ const WishButton = ({ filter, id, initialIsWished, onWishChange }) => {
   });
 
   useEffect(() => {
-    console.log(isWished);
+    // console.log(isWished);
   }, [isWished]);
 
   const handleWishButtonClick = (event) => {
@@ -37,10 +37,10 @@ const WishButton = ({ filter, id, initialIsWished, onWishChange }) => {
   };
 
   return (
-    <button onClick={handleWishButtonClick} aria-label="wish-button">
+    <button onClick={handleWishButtonClick} aria-label="wish-button" className={"z-20"}>
       <AiFillHeart
-        size={20}
-        color={isWished ? "#ff6b6b" : "#e4e5e9"}
+        size={30}
+        color={isWished ? "#f93E00" : "#e4e5e9"}
         style={{ display: "inline-block", fontSize: "16px" }}
       />
     </button>

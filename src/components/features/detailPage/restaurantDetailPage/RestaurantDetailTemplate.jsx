@@ -96,8 +96,8 @@ const RestaurantDetailTemplate = ({ restaurant }) => {
                 <CardTitle title={"Visit Time"} />
                 <div className={"dropdown-wrapper"}>
                   <TimeDropdown
-                    startTime={operatingInfo.reservationAvailableStartTime}
-                    endTime={operatingInfo.reservationAvailableEndTime}
+                    startTime={operatingInfo.reservableStartTime}
+                    endTime={operatingInfo.reservableEndTime}
                     interval={10}
                     value={selectedTime}
                     onChange={setSelectedTime}

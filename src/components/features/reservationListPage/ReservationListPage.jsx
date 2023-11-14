@@ -7,13 +7,18 @@ const ReservationListPage = () => {
   const { data, error, isLoading } = useQuery("reservationList", () =>
     getReservation(),
   );
-
+  console.log("data", data)
+  console.log("error", error)
   return (
     <div className={"main-layout-page"}>
       <PageTitleBar name={"My Booking List"} />
       {data && <ReservationListTemplate reservations={data} />}
       {isLoading && <div>Loading...</div>}
-      {error && <div>{error}</div>}
+      {error && <div
+          className={"text-center text-2xl font-bold w-full h-full flex items-center justify-center"}
+      >
+        There are no reservations.
+      </div>}
     </div>
   );
 };

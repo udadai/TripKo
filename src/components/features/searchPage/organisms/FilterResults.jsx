@@ -11,9 +11,7 @@ const FilterResults = ({ filter, searchResults }) => {
           <h2 className="mx-4 text-xl font-bold">Restaurants</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2">
             {searchResults?.restaurants?.map((restaurant, index) => (
-              <Link to={`/restaurant/${restaurant.id}`}>
-                <RestaurantCard key={index} restaurant={restaurant} />
-              </Link>
+              <RestaurantCard key={index} restaurant={restaurant} />
             ))}
           </div>
         </div>
@@ -23,9 +21,7 @@ const FilterResults = ({ filter, searchResults }) => {
           <h2 className="mx-4 text-xl font-bold">Festivals</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2">
             {searchResults?.festivals?.map((festival, index) => (
-              <Link to={`/festival/${festival.id}`}>
-                <FestivalCard key={index} festival={festival} />
-              </Link>
+              <FestivalCard key={index} festival={festival} />
             ))}
           </div>
         </div>
@@ -35,9 +31,7 @@ const FilterResults = ({ filter, searchResults }) => {
           <h2 className="mx-4 text-xl font-bold">Tourist Spots</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
             {searchResults?.touristSpots?.map((touristSpot, index) => (
-              <Link to={`/touristSpot/${touristSpot.id}`}>
-                <TouristSpotCard key={index} touristSpot={touristSpot} />
-              </Link>
+              <TouristSpotCard key={index} touristSpot={touristSpot} />
             ))}
           </div>
         </div>

@@ -29,7 +29,6 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { data, isLoading, error } = useQuery("products", () => getHome());
   const [query, setQuery] = useState("");
-  console.log(data)
   const handleSearch = async (searchQuery) => {
     navigate(`/search?location=${encodeURIComponent(searchQuery)}`);
   };

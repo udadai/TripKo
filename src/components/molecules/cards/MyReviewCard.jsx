@@ -77,12 +77,15 @@ const MyReviewCard = ({ review }) => {
         )}
 
         <div className="review-photo-section mt-2 flex h-[15rem] w-full overflow-x-scroll">
-          <Photo
-            className="h-[15rem] w-[15rem]"
-            src={review.image}
-            alt="Review Image"
-            extendable={true}
-          />
+          {review.image &&
+            review.image.map((image, index) => (
+              <Photo
+                className="h-[15rem] w-[15rem]"
+                src={image}
+                alt="Review Image"
+                extendable={true}
+              />
+            ))}
         </div>
       </div>
     </div>

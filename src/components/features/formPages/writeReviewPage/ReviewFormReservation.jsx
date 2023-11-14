@@ -11,6 +11,7 @@ const ReviewFormReservation = ({ reservation }) => {
   const [file, setFile] = useState([]); // 이미지 파일
   const [errorMsg, setErrorMsg] = useState(null); // 에러 메시지
   const [description, setDescription] = useState(""); // 리뷰 텍스트
+  const [isUploading, setIsUploading] = useState(false); // 업로드 중인지 여부
   const onChangeReviewText = (e) => {
     setDescription(e.target.value);
   };
@@ -34,6 +35,7 @@ const ReviewFormReservation = ({ reservation }) => {
         setErrorMsg("Please upload image");
         return;
       }
+        setIsUploading(true);
       await postReview[reservation.type](
         reservation.placeId,
         rating,
@@ -41,9 +43,11 @@ const ReviewFormReservation = ({ reservation }) => {
         file,
       );
       alert("Successfully posted review");
+      setIsUploading(false)
       hide();
     } catch (e) {
       alert("Failed to post review due to server error");
+      setIsUploading(false)
       return;
     }
   };
@@ -78,8 +82,9 @@ const ReviewFormReservation = ({ reservation }) => {
         }
         onClick={handleSubmit}
         aria-label={"submit-review"}
+        disabled={isUploading}
       >
-        Submit
+        {isUploading ? "Uploading..." : "Submit"}
       </Button>
     </div>
   );

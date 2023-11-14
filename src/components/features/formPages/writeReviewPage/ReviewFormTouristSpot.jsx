@@ -11,6 +11,7 @@ const ReviewFormTouristSpot = ({ touristSpot }) => {
   const [file, setFile] = useState([]); // 이미지 파일
   const [errorMsg, setErrorMsg] = useState(null); // 에러 메시지
   const [description, setDescription] = useState(""); // 리뷰 텍스트
+  const [isUploading, setIsUploading] = useState(false); // 업로드 중인지 여부
   const onChangeReviewText = (e) => {
     setDescription(e.target.value);
   };
@@ -34,10 +35,13 @@ const ReviewFormTouristSpot = ({ touristSpot }) => {
         setErrorMsg("Please upload image");
         return;
       }
+      setIsUploading(true);
       await postReview.TOURIST_SPOT(touristSpot.id, rating, description, file);
+      setIsUploading(false);
       alert("Successfully posted review");
       hide();
     } catch (e) {
+      setIsUploading(false);
       alert("Failed to post review due to server error");
       return;
     }
@@ -78,8 +82,9 @@ const ReviewFormTouristSpot = ({ touristSpot }) => {
         }
         onClick={handleSubmit}
         aria-label={"submit-review"}
+        disabled={isUploading}
       >
-        Submit
+        {isUploading ? "Uploading..." : "Submit"}
       </Button>
     </div>
   );

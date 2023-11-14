@@ -21,6 +21,7 @@ const EditReviewTemplate = ({
   const [description, setDescription] = useState(initDescription); // 리뷰 텍스트
   const [errorMsg, setErrorMsg] = useState(null); // 에러 메시지
   const [deleteFile, setDeleteFile] = useState([]); // 삭제할 파일];
+  const [isUploading, setIsUploading] = useState(false); // 업로드 중인지 여부
 
   const onChangeReviewText = (e) => {
     setDescription(e.target.value);
@@ -46,12 +47,16 @@ const EditReviewTemplate = ({
       setDeleteFile(["noDeletion"]);
     }
     try {
+      setIsUploading(true)
       await modifyReview[type](placeId, rating, description, file, deleteFile);
       alert("Successfully modified review");
+      setIsUploading(false)
       navigate(-1);
     } catch (e) {
       alert("Failed to modify review due to server error");
+      setIsUploading(false)
       return;
+    } finally {
     }
   };
   return (
@@ -84,8 +89,9 @@ const EditReviewTemplate = ({
         }
         onClick={handleSubmit}
         aria-label={"submit-review"}
+        disabled={isUploading}
       >
-        Edit Review
+        {isUploading ? "Uploading..." : "Submit"}
       </Button>
     </div>
   );

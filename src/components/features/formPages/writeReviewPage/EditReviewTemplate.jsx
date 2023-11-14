@@ -39,10 +39,6 @@ const EditReviewTemplate = ({
       setErrorMsg("Please write review");
       return;
     }
-    if (file.length === 0) {
-      setErrorMsg("Please upload image");
-      return;
-    }
     if (deleteImage.length === 0) {
       setDeleteImage(["noDeletion"]);
     }

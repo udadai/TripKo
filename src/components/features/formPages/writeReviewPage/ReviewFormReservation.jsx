@@ -30,11 +30,6 @@ const ReviewFormReservation = ({ reservation }) => {
         setErrorMsg("Please write review");
         return;
       }
-      if (file.length === 0) {
-        alert("Please upload image");
-        setErrorMsg("Please upload image");
-        return;
-      }
         setIsUploading(true);
       await postReview[reservation.type](
         reservation.placeId,

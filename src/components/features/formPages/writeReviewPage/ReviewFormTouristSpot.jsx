@@ -30,11 +30,6 @@ const ReviewFormTouristSpot = ({ touristSpot }) => {
         setErrorMsg("Please write review");
         return;
       }
-      if (file.length === 0) {
-        alert("Please upload image");
-        setErrorMsg("Please upload image");
-        return;
-      }
       setIsUploading(true);
       await postReview.TOURIST_SPOT(touristSpot.id, rating, description, file);
       setIsUploading(false);

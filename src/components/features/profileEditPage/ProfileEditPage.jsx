@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import { useContext, useEffect, useState } from "react";
 import { useQuery, useMutation } from "react-query";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -12,7 +12,7 @@ import LoadingPage from "../loadingPage/LoadingPage";
 import ButtonBack from "../../atoms/ButtonBack";
 import Photo from "../../atoms/Photo";
 import ErrorBox from "../../atoms/ErrorBox";
-import {ModalContext} from "../../../App";
+import { ModalContext } from "../../../App";
 import ProfileImageEditTemplate from "./ProfileImageEditTemplate";
 
 const ProfileEditPage = () => {
@@ -71,6 +71,8 @@ const ProfileEditPage = () => {
     }
   }, [data, reset]);
 
+  console.log(data);
+
   const mutation = useMutation((newData) => editUser(newData), {
     onSuccess: () => {
       setSuccessMessage("Profile updated successfully!");
@@ -89,10 +91,10 @@ const ProfileEditPage = () => {
   };
   // 파일 업로드
 
-  const {show} = useContext(ModalContext);
+  const { show } = useContext(ModalContext);
   const onOpenImageChange = (e) => {
-    show(<ProfileImageEditTemplate initImageURL={data?.image} />)
-  }
+    show(<ProfileImageEditTemplate initImageURL={data?.image} />);
+  };
 
   if (isLoading) return <LoadingPage />;
   if (error) return <div>Error: {error.message}</div>;

@@ -46,7 +46,7 @@ const PlacePoster = ({
             }
           >
             <StarRating averageRating={averageRating} />
-            {averageRating.toFixed(1)}
+            {averageRating?.toFixed(1)}
           </div>
         </div>
       </Link>

@@ -1,4 +1,4 @@
-import instance, {instanceFormData} from "./api";
+import instance, { instanceFormData } from "./api";
 
 export const user = async () => {
   const result = await instance.get("/userinfo");
@@ -15,4 +15,4 @@ export const uploadUserImage = async (image) => {
   formData.append("image", image);
   const result = await instanceFormData.post("/userinfo/image", formData);
   return result.data.response;
-}
+};

@@ -209,7 +209,7 @@ const RestaurantDetailTemplate = ({ restaurant }) => {
             disabled={!restaurant?.isReservable}
             aria-label="reservation-button"
           >
-            Reserve
+            {restaurant?.isReservable ? "Reserve" : "Not Reservable"}
           </Button>
         }
       </div>

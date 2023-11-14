@@ -17,7 +17,7 @@ const PlacePoster = ({
 }) => {
   const [wished, setWished] = useState(isWished);
   return (
-    <div className="place-card shadow-rounded-card relative flex flex-shrink-0 flex-col justify-between gap-1 p-2 md:w-[15rem]">
+    <div className="place-card shadow-rounded-card relative flex-shrink-0 p-2 md:w-[15rem]">
       <div className="absolute right-4 top-4">
         <WishButton
           filter={"touristSpot"}
@@ -26,7 +26,10 @@ const PlacePoster = ({
           onWishChange={(newWishState) => setWished(newWishState)}
         />
       </div>
-      <Link to={to ? to : "/"}>
+      <Link
+        to={to ? to : "/"}
+        className={"flex flex-col justify-between gap-1 h-full w-full"}
+      >
         <div className={"place-card-header"}>
           <div
             className={

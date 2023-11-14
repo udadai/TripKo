@@ -10,9 +10,9 @@ import ReviewFormReservation from "../../features/formPages/writeReviewPage/Revi
 import Button from "../../atoms/Button";
 import { isReviewable } from "./utils";
 import { BsFillPersonFill } from "react-icons/bs";
+import ReservationDetailTemplate from "../../organisms/ReservationDetailTemplate";
 
 const ReservationCard = ({ reservation }) => {
-
   const navigate = useNavigate();
   const navigateToDetail = (e) => {
     e.stopPropagation();
@@ -21,7 +21,11 @@ const ReservationCard = ({ reservation }) => {
   const { show } = useContext(ModalContext);
 
   return (
-    <div className="reservation-card-wrapper ticket-card flex h-40 w-full">
+    <div
+      className="reservation-card-wrapper ticket-card flex h-40 w-full"
+      onClick={() => show(<ReservationDetailTemplate reservation={reservation} />)}
+      aria-label={`reservation card of ${reservation.name} at ${reservation.date} ${reservation.time} at ${reservation.address} with ${reservation.headCount} people to more detail, click this card`}
+    >
       <Photo
         className={"reservation-image cutting-line h-40 w-[12rem] object-cover"}
         src={reservation.image}
@@ -41,10 +45,13 @@ const ReservationCard = ({ reservation }) => {
           <div className={"reservation-time "}>
             Time : {reservation?.date} {reservation?.time}
           </div>
-          <div
-            className={"reservation-location line-clamp-2 flex items-center "}
-          >
-            <MapIcon color={"#FF4800"} /> {reservation?.address}
+          <div className={"reservation-location-wrapper flex gap-2 items-center"}>
+            <MapIcon color={"#FF4800"} size={25} />
+            <div
+              className={
+                "reservation-location-detail line-clamp-1 items-center "
+              }
+            >{reservation?.address}</div>
           </div>
           <div className={"reservation-message text-gray-500"}>
             {reservation?.message}{" "}
@@ -67,6 +74,7 @@ const ReservationCard = ({ reservation }) => {
               }
               onClick={(e) => {
                 e.stopPropagation();
+                console.log("clicked")
                 show(<ReviewFormReservation reservation={reservation} />);
               }}
               aria-label={"write-review-button"}

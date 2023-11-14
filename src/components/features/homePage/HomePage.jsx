@@ -55,6 +55,8 @@ const HomePage = () => {
                     image={festival.image}
                     alt={`poster of ${festival.name}`}
                     to={`festival/${festival.id}`}
+                    id={festival.id}
+                    isWished={festival.isWished}
                   />
                 );
               })}
@@ -72,6 +74,8 @@ const HomePage = () => {
                     name={restaurant.name}
                     address={restaurant.address}
                     averageRating={restaurant.averageRating}
+                    id={restaurant.id}
+                    isWished={restaurant.isWished}
                   />
                 );
               })}
@@ -87,6 +91,8 @@ const HomePage = () => {
                   address={spot.address}
                   to={`touristSpot/${spot.id}`}
                   averageRating={spot.averageRating}
+                  id={spot.id}
+                  isWished={spot.isWished}
                 />
               ))}
           </HorizontalListSectionMediaQuery>

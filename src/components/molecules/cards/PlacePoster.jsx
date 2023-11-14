@@ -2,13 +2,33 @@ import { Link } from "react-router-dom";
 import CardTitle from "../../atoms/CardTitle";
 import Photo from "../../atoms/Photo";
 import StarRating from "../../atoms/StarRating";
+import WishButton from "../../atoms/WishButton";
+import { useState } from "react";
 
-const PlacePoster = ({ image, name, address, to, alt, averageRating }) => {
+const PlacePoster = ({
+  image,
+  name,
+  address,
+  to,
+  alt,
+  averageRating,
+  id,
+  isWished,
+}) => {
+  const [wished, setWished] = useState(isWished);
   return (
     <Link
       to={to ? to : "/"}
-      className="place-card shadow-rounded-card flex flex-shrink-0 flex-col justify-between gap-1 p-2 md:w-[15rem]"
+      className="place-card shadow-rounded-card relative flex flex-shrink-0 flex-col justify-between gap-1 p-2 md:w-[15rem]"
     >
+      <div className="absolute right-4 top-4">
+        <WishButton
+          filter={"touristSpot"}
+          id={id}
+          initialIsWished={wished}
+          onWishChange={(newWishState) => setWished(newWishState)}
+        />
+      </div>
       <div className={"place-card-header"}>
         <div
           className={
@@ -22,13 +42,16 @@ const PlacePoster = ({ image, name, address, to, alt, averageRating }) => {
           />
         </div>
         <CardTitle title={name} lineClamp={2} />
-
       </div>
-      <div className={"place-card-body flex items-center text-sm flex-col"}>
+      <div className={"place-card-body flex flex-col items-center text-sm"}>
         <div className="place-card-address line-clamp-2 w-full">{address}</div>
-        <div className={"place-card-body flex items-center text-sm justify-start w-full"}>
-        <StarRating averageRating={averageRating} />
-        {averageRating.toFixed(1)}
+        <div
+          className={
+            "place-card-body flex w-full items-center justify-start text-sm"
+          }
+        >
+          <StarRating averageRating={averageRating} />
+          {averageRating.toFixed(1)}
         </div>
       </div>
     </Link>

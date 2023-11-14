@@ -6,7 +6,7 @@ const InfoElement = ({ title, value }) => {
       <h3 className={"text-xl font-bold text-tripKoOrange-500"}>
         {toUpperCaseFirstWord(title)}
       </h3>
-      <p className={"line-clamp-2 text-xl"}>{value}</p>
+      <p className={"text-xl"}>{value}</p>
     </div>
   );
 };

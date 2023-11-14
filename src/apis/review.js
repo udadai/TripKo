@@ -45,7 +45,7 @@ export const organizeModifyReview = (
   rating,
   description,
   file,
-  deleteFile,
+  deleteImage,
 ) => {
   const formData = new FormData();
   formData.append("placeId", placeId);
@@ -54,7 +54,7 @@ export const organizeModifyReview = (
     file.forEach((f) => {
         formData.append("image", f);
     });
-  formData.append("deleteFile", deleteFile);
+  formData.append("deleteImage", deleteImage);
   return formData;
 };
 
@@ -89,11 +89,11 @@ export const modifyRestaurantReview = async (
   rating,
   description,
   file,
-  deleteFile,
+  deleteImage,
 ) => {
   const result = await instanceFormData.patch(
     `/restaurant/reviews/${placeId}`,
-    organizeModifyReview(placeId, rating, description, file, deleteFile),
+    organizeModifyReview(placeId, rating, description, file, deleteImage),
   );
   return result.data.response;
 };
@@ -103,11 +103,11 @@ export const modifyFestivalReview = async (
   rating,
   description,
   file,
-  deleteFile,
+  deleteImage,
 ) => {
   const result = await instanceFormData.patch(
     `/festival/reviews/${placeId}`,
-    organizeModifyReview(placeId, rating, description, file, deleteFile),
+    organizeModifyReview(placeId, rating, description, file, deleteImage),
   );
   return result.data.response;
 };
@@ -117,11 +117,11 @@ export const modifyTouristSpotReview = async (
   rating,
   description,
   file,
-  deleteFile,
+  deleteImage,
 ) => {
   const result = await instanceFormData.patch(
     `/touristSpot/reviews/${placeId}`,
-    organizeModifyReview(placeId, rating, description, file, deleteFile),
+    organizeModifyReview(placeId, rating, description, file, deleteImage),
   );
   return result.data.response;
 };

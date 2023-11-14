@@ -20,7 +20,7 @@ const EditReviewTemplate = ({
   const [file, setFile] = useState(""); // 이미지 파일
   const [description, setDescription] = useState(initDescription); // 리뷰 텍스트
   const [errorMsg, setErrorMsg] = useState(null); // 에러 메시지
-  const [deleteFile, setDeleteFile] = useState([]); // 삭제할 파일];
+  const [deleteImage, setDeleteImage] = useState([]); // 삭제할 파일];
   const [isUploading, setIsUploading] = useState(false); // 업로드 중인지 여부
 
   const onChangeReviewText = (e) => {
@@ -43,12 +43,12 @@ const EditReviewTemplate = ({
       setErrorMsg("Please upload image");
       return;
     }
-    if (deleteFile.length === 0) {
-      setDeleteFile(["noDeletion"]);
+    if (deleteImage.length === 0) {
+      setDeleteImage(["noDeletion"]);
     }
     try {
       setIsUploading(true)
-      await modifyReview[type](placeId, rating, description, file, deleteFile);
+      await modifyReview[type](placeId, rating, description, file, deleteImage);
       alert("Successfully modified review");
       setIsUploading(false)
       navigate(-1);
@@ -80,7 +80,7 @@ const EditReviewTemplate = ({
         setScore={setRating}
         errorMsg={errorMsg}
         initImage={initImage}
-        setDeletedImage={setDeleteFile}
+        setDeletedImage={setDeleteImage}
       />
       <Button
         as={"button"}

@@ -8,8 +8,6 @@ const ReservationListPage = () => {
   const { data, error, isLoading } = useQuery("reservationList", () =>
     getReservation(),
   );
-  console.log("data", data)
-  console.log("error", error)
   return (
     <div className={"main-layout-page"}>
       <PageTitleBar name={"My Booking List"} />

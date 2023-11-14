@@ -30,7 +30,7 @@ const SearchBar = ({ value, onChange, onSearch }) => {
 
   const toggleSideBar = () => setIsSideBarOpen(!isSideBarOpen);
 
-  const { data } = useQuery("userdata", () => user());
+  // const { data } = useQuery("userdata", () => user());
 
   return (
     <div className="search-section relative flex items-center justify-between gap-2 p-2">
@@ -63,7 +63,7 @@ const SearchBar = ({ value, onChange, onSearch }) => {
       <Link to={userToken ? "/userinfo" : "/login"}>
         {userToken ? (
           <UserAvatar
-            image={data?.data?.response?.image || "/images/default-avatar.jpg"}
+            image={"/images/default-avatar.jpg"}
             onClick={() => console.log("clicked")}
             className="h-[3rem] w-[3rem] rounded-full"
           />

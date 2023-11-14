@@ -94,4 +94,8 @@
       transform: rotate(360deg);
     }
   }
+
+  button:disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
 }

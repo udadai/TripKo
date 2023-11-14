@@ -10,7 +10,7 @@ const UserAvatar = ({ image, onClick, className }) => {
         aria-label="user-avatar"
       >
         <Photo
-          src={image}
+          src={image || "/images/default-avatar.jpg"}
           alt="avatar"
           className={"h-full w-full rounded-full object-scale-down"}
         />

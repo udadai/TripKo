@@ -121,7 +121,7 @@ const ProfileEditPage = () => {
             aria-label={"change-profile-image"}
           >
             <Photo
-              src={data?.image}
+              src={data?.image || "/images/default-avatar.jpg"}
               alt={data?.name}
               className={"mx-auto h-40 w-40 rounded-full"}
             />

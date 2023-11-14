@@ -24,7 +24,7 @@ const MyPageTemplate = ({ userDetails }) => {
 
       <div className="userProfile-infoSection flex flex-col items-center justify-center">
         <Photo
-          src={"https://picsum.photos/230"}
+          src={userDetails?.image || "/images/default-avatar.jpg"}
           className="userProfile-image my-2 h-60 w-60 rounded-full object-cover"
         />
         <div className="userProfile-nickname my-2 text-2xl font-bold">

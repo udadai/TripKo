@@ -99,11 +99,11 @@ const FestivalDetailTemplate = ({ festival }) => {
                   as="button"
                   onClick={onReserve}
                   variant="link"
-                  className="rounded-button-[tripKoOrange] mt-4 flex h-12 w-full items-center justify-center rounded-full bg-tripKoOrange text-white font-bold text-xl"
+                  className="rounded-button-[tripKoOrange] mt-4 flex h-12 w-full items-center justify-center rounded-full bg-tripKoOrange text-xl font-bold text-white"
                   aria-label="reserve-button"
                   disabled={isReserving}
                 >
-                  Reserve
+                  {isReserving ? "Reserving..." : "Reserve"}
                 </Button>
               </div>
             </div>
@@ -141,7 +141,11 @@ const FestivalDetailTemplate = ({ festival }) => {
           <InfoElement title={"Price"} value={`₩${comma(festival.price)}`} />
         </div>
         <SectionTitle title={"Reviews"} />
-        <div className={"flex flex-row items-center justify-between font-bold text-2xl px-2 text-tripKoOrange-500"}>
+        <div
+          className={
+            "flex flex-row items-center justify-between px-2 text-2xl font-bold text-tripKoOrange-500"
+          }
+        >
           {festival?.averageRating}/5.0
         </div>
         {data && <ReviewCards reviews={data.reviews.slice(0, 2)} />}

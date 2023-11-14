@@ -29,6 +29,12 @@ const WishButton = ({ filter, id, initialIsWished, onWishChange }) => {
 
   const handleWishButtonClick = (event) => {
     event.stopPropagation();
+    // 로그인 안되어있으면 로그인 페이지로 이동
+    if (!localStorage.getItem("token")) {
+      alert("Login is required");
+      window.location.href = "/login";
+      return;
+    }
     if (isWished) {
       deleteMutation.mutate();
     } else {

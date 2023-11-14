@@ -30,7 +30,7 @@ const SearchBar = ({ value, onChange, onSearch }) => {
 
   const toggleSideBar = () => setIsSideBarOpen(!isSideBarOpen);
 
-  const {data, isLoading, error} = useQuery("userdata", () => user());
+  const { data } = useQuery("userdata", () => user());
 
   return (
     <div className="search-section relative flex items-center justify-between gap-2 p-2">

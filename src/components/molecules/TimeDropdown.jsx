@@ -17,8 +17,8 @@ const TimeDropdown = ({
           startTime,
           endTime,
           interval,
-          startBreakTime ?? startTime,
-          endBreakTime ?? endTime,
+          startBreakTime ?? endTime,
+          endBreakTime ?? startTime,
         )}
         value={value}
         onChange={onChange ? onChange : () => {}} // onChange가 없으면 아무것도 하지 않는다.

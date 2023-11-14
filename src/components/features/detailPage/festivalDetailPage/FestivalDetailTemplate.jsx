@@ -160,7 +160,7 @@ const FestivalDetailTemplate = ({ festival }) => {
           disabled={!festival?.isReservable}
           aria-label="reservation-button"
         >
-          Reserve
+          {festival?.isReservable ? "Reserve" : "Not Reservable"}
         </Button>
       </div>
     </div>

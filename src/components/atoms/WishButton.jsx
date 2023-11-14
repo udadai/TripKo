@@ -24,11 +24,17 @@ const WishButton = ({ filter, id, initialIsWished, onWishChange }) => {
   });
 
   useEffect(() => {
-    console.log(isWished);
+    // console.log(isWished);
   }, [isWished]);
 
   const handleWishButtonClick = (event) => {
     event.stopPropagation();
+    // 로그인 안되어있으면 로그인 페이지로 이동
+    if (!localStorage.getItem("token")) {
+      alert("Login is required");
+      window.location.href = "/login";
+      return;
+    }
     if (isWished) {
       deleteMutation.mutate();
     } else {
@@ -37,10 +43,10 @@ const WishButton = ({ filter, id, initialIsWished, onWishChange }) => {
   };
 
   return (
-    <button onClick={handleWishButtonClick} aria-label="wish-button">
+    <button onClick={handleWishButtonClick} aria-label="wish-button" className={"z-20"}>
       <AiFillHeart
-        size={20}
-        color={isWished ? "#ff6b6b" : "#e4e5e9"}
+        size={30}
+        color={isWished ? "#f93E00" : "#e4e5e9"}
         style={{ display: "inline-block", fontSize: "16px" }}
       />
     </button>

@@ -48,7 +48,7 @@ const Calendar = ({ selectedDate, setSelectedDate, holidays, startDate, endDate 
       </div>
       <CalendarSlide
         monthState={monthState}
-        holidays={holidays}
+        holidays={holidays || []}
         setSelectedDate={setSelectedDate}
         selectedDate={selectedDate}
         startDate={startDate}

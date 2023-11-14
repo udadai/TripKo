@@ -5,7 +5,7 @@ import Photo from "../../atoms/Photo";
 const MenuCard = ({ menu }) => {
   return (
     <div
-      className={"menu-card flex w-full gap-2 shadow-rounded-card p-2 flex-col"}>
+      className={"menu-card flex gap-2 shadow-rounded-card p-2 flex-col max-w-[16rem]"}>
       <div className={"menu-card-image h-[15rem] w-[15rem] flex-shrink-0 overflow-hidden rounded-xl"}>
         <Photo src={menu.image} alt={menu.name} />
       </div>

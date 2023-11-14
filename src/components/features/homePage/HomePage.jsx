@@ -13,7 +13,7 @@ import { useState } from "react";
 import LoadingPage from "../loadingPage/LoadingPage";
 import ErrorPage from "../ErrorPage/ErrorPage";
 
-const dummySlides = [
+const CAROUSEL_SLIDES = [
   {
     image: "/images/carousel/carousel1.jpg"
   },
@@ -29,7 +29,6 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { data, isLoading, error } = useQuery("products", () => getHome());
   const [query, setQuery] = useState("");
-  console.log(data)
   const handleSearch = async (searchQuery) => {
     navigate(`/search?location=${encodeURIComponent(searchQuery)}`);
   };
@@ -42,7 +41,7 @@ const HomePage = () => {
         onSearch={handleSearch}
       />
       <div className={"carousel-wrapper height-flex-layout-small"}>
-        <Carousel slides={dummySlides} />
+        <Carousel slides={CAROUSEL_SLIDES} />
       </div>
       {data && (
         <>
@@ -56,6 +55,8 @@ const HomePage = () => {
                     image={festival.image}
                     alt={`poster of ${festival.name}`}
                     to={`festival/${festival.id}`}
+                    id={festival.id}
+                    isWished={festival.isWished}
                   />
                 );
               })}
@@ -73,6 +74,8 @@ const HomePage = () => {
                     name={restaurant.name}
                     address={restaurant.address}
                     averageRating={restaurant.averageRating}
+                    id={restaurant.id}
+                    isWished={restaurant.isWished}
                   />
                 );
               })}
@@ -88,6 +91,8 @@ const HomePage = () => {
                   address={spot.address}
                   to={`touristSpot/${spot.id}`}
                   averageRating={spot.averageRating}
+                  id={spot.id}
+                  isWished={spot.isWished}
                 />
               ))}
           </HorizontalListSectionMediaQuery>

@@ -96,8 +96,8 @@ const RestaurantDetailTemplate = ({ restaurant }) => {
                 <CardTitle title={"Visit Time"} />
                 <div className={"dropdown-wrapper"}>
                   <TimeDropdown
-                    startTime={operatingInfo.reservationAvailableStartTime}
-                    endTime={operatingInfo.reservationAvailableEndTime}
+                    startTime={operatingInfo.reservableStartTime}
+                    endTime={operatingInfo.reservableEndTime}
                     interval={10}
                     value={selectedTime}
                     onChange={setSelectedTime}
@@ -209,7 +209,7 @@ const RestaurantDetailTemplate = ({ restaurant }) => {
             disabled={!restaurant?.isReservable}
             aria-label="reservation-button"
           >
-            Reserve
+            {restaurant?.isReservable ? "Reserve" : "Not Reservable"}
           </Button>
         }
       </div>

@@ -13,7 +13,7 @@ import { useState } from "react";
 import LoadingPage from "../loadingPage/LoadingPage";
 import ErrorPage from "../ErrorPage/ErrorPage";
 
-const dummySlides = [
+const CAROUSEL_SLIDES = [
   {
     image: "/images/carousel/carousel1.jpg"
   },
@@ -41,7 +41,7 @@ const HomePage = () => {
         onSearch={handleSearch}
       />
       <div className={"carousel-wrapper height-flex-layout-small"}>
-        <Carousel slides={dummySlides} />
+        <Carousel slides={CAROUSEL_SLIDES} />
       </div>
       {data && (
         <>

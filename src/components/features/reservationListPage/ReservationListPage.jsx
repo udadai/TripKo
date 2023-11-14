@@ -2,6 +2,7 @@ import PageTitleBar from "../../molecules/PageTitleBar";
 import { useQuery } from "react-query";
 import { getReservation } from "../../../apis/reservation";
 import ReservationListTemplate from "./ReservationListTemplate";
+import LoadingPage from "../loadingPage/LoadingPage";
 
 const ReservationListPage = () => {
   const { data, error, isLoading } = useQuery("reservationList", () =>
@@ -13,7 +14,7 @@ const ReservationListPage = () => {
     <div className={"main-layout-page"}>
       <PageTitleBar name={"My Booking List"} />
       {data && <ReservationListTemplate reservations={data} />}
-      {isLoading && <div>Loading...</div>}
+      {isLoading && <LoadingPage/>}
       {error && <div
           className={"text-center text-2xl font-bold w-full h-full flex items-center justify-center"}
       >

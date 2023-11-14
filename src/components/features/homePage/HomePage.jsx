@@ -15,14 +15,14 @@ import ErrorPage from "../ErrorPage/ErrorPage";
 
 const CAROUSEL_SLIDES = [
   {
-    image: "/images/carousel/carousel1.jpg"
+    image: "/images/carousel/carousel1.jpg",
   },
   {
-    image: "/images/carousel/carousel2.jpg"
+    image: "/images/carousel/carousel2.jpg",
   },
   {
-    image: "/images/carousel/carousel3.webp"
-  }
+    image: "/images/carousel/carousel3.webp",
+  },
 ];
 
 const HomePage = () => {
@@ -98,12 +98,8 @@ const HomePage = () => {
           </HorizontalListSectionMediaQuery>
         </>
       )}
-      {
-        isLoading && <LoadingPage />
-      }
-      {
-        error && <ErrorPage/>
-      }
+      {isLoading && <LoadingPage />}
+      {error && <ErrorPage />}
     </div>
   );
 };

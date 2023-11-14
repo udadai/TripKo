@@ -18,7 +18,7 @@ const FestivalCard = ({ festival }) => {
               className="h-32 w-24"
             />
             <div className="ml-2 w-full items-center">
-              <div className="festival-name mr-6">
+              <div className="festival-name mr-7">
                 <h4 className="text-lg font-semibold">{festival.name}</h4>
               </div>
               <div className="mt-1 flex items-center">

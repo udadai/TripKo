@@ -69,7 +69,7 @@ const FoodSearchPage = () => {
             </button>
             <Input
               className="text-md w-full rounded-lg bg-gray-100 p-2 pl-16 outline-none"
-              placeholder="Search for food"
+              placeholder="'beef', 'six times'와 같이 검색해 보세요"
               value={currentQuery}
               onChange={(e) => setCurrentQuery(e.target.value)}
               onKeyDown={(e) => {

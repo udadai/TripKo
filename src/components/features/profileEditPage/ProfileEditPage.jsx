@@ -71,8 +71,6 @@ const ProfileEditPage = () => {
     }
   }, [data, reset]);
 
-  console.log(data);
-
   const mutation = useMutation((newData) => editUser(newData), {
     onSuccess: () => {
       setSuccessMessage("Profile updated successfully!");

@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Photo from "../../atoms/Photo";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
+import UserAvatar from "../../atoms/UserAvatar";
 
 const MyPageTemplate = ({ userDetails }) => {
   const navigate = useNavigate();
+  console.log(userDetails);
   return (
     <>
       <div className="userProfile-navigation mt-4 flex">
@@ -23,9 +25,13 @@ const MyPageTemplate = ({ userDetails }) => {
       </div>
 
       <div className="userProfile-infoSection flex flex-col items-center justify-center">
-        <Photo
+        {/* <Photo
           src={userDetails?.image || "/images/default-avatar.jpg"}
           className="userProfile-image my-2 h-60 w-60 rounded-full object-cover"
+        /> */}
+        <UserAvatar
+          image={userDetails?.image || "/images/default-avatar.jpg"}
+          className="userProfile-avatar my-2 h-60 w-60 rounded-full object-cover"
         />
         <div className="userProfile-nickname my-2 text-2xl font-bold">
           {userDetails?.nickname}
@@ -73,7 +79,7 @@ const MyPageTemplate = ({ userDetails }) => {
           as="button"
           onClick={() => {
             localStorage.removeItem("token");
-            localStorage.removeItem("Refresh-Token")
+            localStorage.removeItem("Refresh-Token");
             alert("You have successfully logged out.");
             navigate("/login");
             window.location.reload();

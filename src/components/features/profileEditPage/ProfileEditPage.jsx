@@ -114,7 +114,7 @@ const ProfileEditPage = () => {
         </div>
         <div className={"avatar-wrapper flex w-full justify-center "}>
           <div
-            className={"relative overflow-hidden rounded-full"}
+            className={"relative overflow-hidden rounded-full cursor-pointer"}
             onClick={onOpenImageChange}
             aria-label={"change-profile-image"}
           >

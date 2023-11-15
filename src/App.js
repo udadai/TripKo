@@ -104,7 +104,7 @@ function App() {
                     <Route path={"/login"} element={<LoginPage />} />
                     <Route path={"/register"} element={<RegisterPage />} />
 
-                    <Route path={"/reviews/:id"} element={<EditReviewPage />} />
+                    <Route path={"/reviews/:type/:id"} element={<EditReviewPage />} />
                   </Route>
 
                   <Route path="*" element={<ErrorPage />} />

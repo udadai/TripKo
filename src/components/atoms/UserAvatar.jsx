@@ -4,7 +4,7 @@ import Photo from "./Photo";
 import { user } from "../../apis/user";
 
 const UserAvatar = ({ image, onClick, className }) => {
-  const { data } = useQuery("user", user);
+  // const { data } = useQuery("user", user);
 
   return (
     <>
@@ -14,7 +14,8 @@ const UserAvatar = ({ image, onClick, className }) => {
         aria-label="user-avatar"
       >
         <Photo
-          src={data?.image || "/images/default-avatar.jpg"}
+          // src={data?.image || "/images/default-avatar.jpg"}
+            src={image || "/images/default-avatar.jpg"}
           alt="avatar"
           className={"h-full w-full rounded-full object-scale-down"}
         />

@@ -6,23 +6,23 @@ import ReviewForm from "./organisms/ReviewForm";
 
 const EditReviewTemplate = ({
   prevReview: {
+    reviewId,
     placeId,
     placeName,
     address,
-    type,
     rating: initRating,
     description: initDescription,
     image: initImage,
     visitDay,
   },
+  type,
 }) => {
   const [rating, setRating] = useState(initRating);
-  const [file, setFile] = useState(""); // 이미지 파일
+  const [image, setImage] = useState([]); // 이미지 파일
   const [description, setDescription] = useState(initDescription); // 리뷰 텍스트
   const [errorMsg, setErrorMsg] = useState(null); // 에러 메시지
   const [deleteImage, setDeleteImage] = useState([]); // 삭제할 파일];
   const [isUploading, setIsUploading] = useState(false); // 업로드 중인지 여부
-
   const onChangeReviewText = (e) => {
     setDescription(e.target.value);
   };
@@ -43,14 +43,20 @@ const EditReviewTemplate = ({
       setDeleteImage(["noDeletion"]);
     }
     try {
-      setIsUploading(true)
-      await modifyReview[type](placeId, rating, description, file, deleteImage);
+      setIsUploading(true);
+      await modifyReview(type, reviewId,{
+        placeId,
+        rating,
+        description,
+        image,
+        deleteImage
+      });
       alert("Successfully modified review");
-      setIsUploading(false)
+      setIsUploading(false);
       navigate(-1);
     } catch (e) {
       alert("Failed to modify review due to server error");
-      setIsUploading(false)
+      setIsUploading(false);
       return;
     } finally {
     }
@@ -68,8 +74,8 @@ const EditReviewTemplate = ({
       </div>
       <div className={"place-address text-lg"}>{address}</div>
       <ReviewForm
-        file={file}
-        setFile={setFile}
+        file={image}
+        setFile={setImage}
         reviewText={description}
         onChangeReviewText={onChangeReviewText}
         score={rating}

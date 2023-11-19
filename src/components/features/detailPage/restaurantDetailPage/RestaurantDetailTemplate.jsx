@@ -18,6 +18,7 @@ import { reserveRestaurant } from "../../../../apis/reservation";
 import { useNavigate } from "react-router-dom";
 import Article from "../../../organisms/Article";
 import { getReviewByIdAndType } from "../../../../apis/review";
+import {dateToString} from "../../../../utils/convert";
 
 const RestaurantDetailTemplate = ({ restaurant }) => {
   const [isActiveReview, setIsActiveReview] = useState(false);
@@ -53,7 +54,7 @@ const RestaurantDetailTemplate = ({ restaurant }) => {
       return;
     }
     // date 를 YYYY-MM-DD 형식으로 변환
-    const dateString = selectedDate.toISOString().split("T")[0];
+    const dateString = dateToString(selectedDate);
     setIsReserving(true);
     try {
       await reserveRestaurant(

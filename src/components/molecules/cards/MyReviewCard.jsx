@@ -8,13 +8,14 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import Button from "../../atoms/Button";
 import { deleteReview } from "../../../apis/review";
+import {PLACES} from "../../../utils/constants";
 
 const MyReviewCard = ({ review }) => {
   const [isExtended, setExtended] = useState(false);
 
   const onDeleteReview = async () => {
     try {
-      await deleteReview(review.reviewId);
+      await deleteReview(review.reviewId, PLACES[review.type]);
       alert("review deleted");
       window.location.reload();
     } catch (e) {
@@ -28,7 +29,7 @@ const MyReviewCard = ({ review }) => {
         className={"review-control-buttons absolute right-3 top-3 flex gap-4"}
       >
         <Link
-          to={`/reviews/${review.reviewId}`}
+          to={`/reviews/${PLACES[review.type]}/${review.reviewId}`}
           className="review-card-header flex gap-2"
         >
           <FiEdit size={30} color={"#444444"} />

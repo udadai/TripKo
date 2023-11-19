@@ -44,16 +44,16 @@ export const organizeModifyReview = (
   placeId,
   rating,
   description,
-  file,
+  image,
   deleteImage,
 ) => {
   const formData = new FormData();
   formData.append("placeId", placeId);
   formData.append("rating", Math.ceil(rating));
   formData.append("description", description);
-    file.forEach((f) => {
-        formData.append("image", f);
-    });
+  image.forEach((f) => {
+    formData.append("image", f);
+  });
   formData.append("deleteImage", deleteImage);
   return formData;
 };
@@ -84,53 +84,25 @@ export const postFestivalReview = async (
   return result.data.response;
 };
 
-export const modifyRestaurantReview = async (
-  placeId,
-  rating,
-  description,
-  file,
-  deleteImage,
-) => {
+export const modifyReview = async (type, reviewId, review) => {
+  console.log("review", review);
+  console.log("reviewId", reviewId);
+  console.log("type", type)
+  const {placeId, rating, description, image, deleteImage } = review;
+  const organizedData = organizeModifyReview(
+      placeId,
+      rating,
+      description,
+      image,
+      deleteImage,
+  );
+  console.log("organizedData", organizedData)
   const result = await instanceFormData.patch(
-    `/restaurant/reviews/${placeId}`,
-    organizeModifyReview(placeId, rating, description, file, deleteImage),
+      `/${type}/reviews/${reviewId}`,
+      organizedData,
   );
   return result.data.response;
-};
-
-export const modifyFestivalReview = async (
-  placeId,
-  rating,
-  description,
-  file,
-  deleteImage,
-) => {
-  const result = await instanceFormData.patch(
-    `/festival/reviews/${placeId}`,
-    organizeModifyReview(placeId, rating, description, file, deleteImage),
-  );
-  return result.data.response;
-};
-
-export const modifyTouristSpotReview = async (
-  placeId,
-  rating,
-  description,
-  file,
-  deleteImage,
-) => {
-  const result = await instanceFormData.patch(
-    `/touristSpot/reviews/${placeId}`,
-    organizeModifyReview(placeId, rating, description, file, deleteImage),
-  );
-  return result.data.response;
-};
-
-export const modifyReview = {
-  RESTAURANT: modifyRestaurantReview,
-  FESTIVAL: modifyFestivalReview,
-  TOURIST_SPOT: modifyTouristSpotReview,
-};
+}
 
 export const postTouristSpotReview = async (
   placeId,
@@ -158,11 +130,22 @@ export const getIsReviewed = async (placeId, type) => {
 
 export const getMyReview = async () => {
   const result = await instance.get("/userinfo/reviews");
+  result.data.response.festival.map((f) => {
+    f.type = "FESTIVAL";
+    return f;
+  });
+  result.data.response.restaurant.map((r) => {
+    r.type = "RESTAURANT";
+    return r;
+  });
+  result.data.response.touristSpot.map((t) => {
+    t.type = "TOURIST_SPOT";
+    return t;
+  });
   return result.data.response;
 };
 
-export const deleteReview = async (reviewId) => {
-  const { type } = await getMyReviewById(reviewId);
+export const deleteReview = async (reviewId, type) => {
   const result = await instance.delete(`/${type}/reviews/${reviewId}`);
   return result.data.response;
 };

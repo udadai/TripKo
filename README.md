@@ -3,8 +3,6 @@
 [한국이 <span style="color:#FF8A00">**처음**</span>이라도, 한국어를 <span style="color:#FF8A00">**몰라도**</span>
 <span style="color:#FF8A00">**제약없이**</span> 즐기는 한국 로컬여행](https://k50c1bf82e6cfa.user-app.krampoline.com/)
 
-
-
 ## 서비스 소개
 
 #### 1️⃣ 다양한 관광 정보 제공
@@ -126,12 +124,15 @@ TripKoFE
 
 ```
 
-
 ## 필수 첨부자료
 
 ### 팀 내 배포 링크
 
 https://k50c1bf82e6cfa.user-app.krampoline.com/
+
+👩‍💻 [백엔드 깃헙 링크](https://github.com/Step3-kakao-tech-campus/Team6_BE)
+
+🧑‍💻 [프론트엔드 깃헙 링크](https://github.com/Step3-kakao-tech-campus/Team6_FE)
 
 ### 최신 ERD 이미지
 
@@ -180,4 +181,3 @@ https://www.notion.so/minmunui/ERD-209d965fd43643238198914e94840098?pvs=4
 `as` 속성을 사용해서 다형성을 가진 컴포넌트를 구성하여 재사용성을 높이려 하였습니다.
 
 `as: Component = "button"`
-

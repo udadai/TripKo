@@ -140,6 +140,10 @@ https://k50c1bf82e6cfa.user-app.krampoline.com/
 
 https://www.notion.so/minmunui/ERD-209d965fd43643238198914e94840098?pvs=4
 
+### 와이어프레임
+
+https://www.figma.com/file/PJQkKiT3suBqsVzo5QGKI7/Wireframe?type=design&node-id=0%3A1&mode=design&t=a3IhGMm2DTUACxKn-1
+
 ### 코딩에 대한 간략한 소개
 
 - 컴포넌트 재사용성

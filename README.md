@@ -126,7 +126,7 @@ TripKoFE
 
 ## 필수 첨부자료
 
-### 팀 내 배포 링크
+### 팀 내 배포 링크 (크램폴린 만료)
 
 https://k50c1bf82e6cfa.user-app.krampoline.com/
 
